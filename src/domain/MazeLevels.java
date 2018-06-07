@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class MazeLevels extends JPanel implements MouseListener, Runnable {
 
@@ -26,21 +27,28 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
     FastCharacter fast;
     FuriousCharacter furious;
     SmartCharacter smart;
+    Item1 item;
 
     //arrayList de threads
     ArrayList<FastCharacter> fastArray = new ArrayList<>();
     ArrayList< FuriousCharacter> furiusArray = new ArrayList<>();
     ArrayList<SmartCharacter> smartArray = new ArrayList<>();
+    ArrayList<Item1> itemArray = new ArrayList<>();
+
     
     //llevan la cuenta de los array para  iniciar los threads
     ArrayList<Image> array;
     int countFast = 0;
     int countFurious = 0;
     int countSmart = 0;
+      int countItem = 0;
+      
     //activan el start
     int tempFastSize = 0;
     int tempFurious = 0;
     int tempSmart = 0;
+    int tempItem = 0;
+
 
     public MazeLevels(Maze maze, int level, int width, int hight) throws IOException {
         addMouseListener(this);
@@ -165,6 +173,15 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
                 g2.drawImage(smart.getPlayerImage(), smart.getPositionX(), smart.getPositionY(), this);
             }
         }
+        
+        if (itemArray != null){
+            for (int i = 0; i < itemArray.size(); i++){
+                
+                item = (Item1) itemArray.get(i);
+                g2.drawImage(item.getPlayerImage(), item.getPositionX(), item.getPositionY(), this);
+            }
+        }
+
     }
 
     public void addCharacter(Object character, String type) {
@@ -210,31 +227,75 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
             tempFurious = 0;
             tempSmart = 1;
         }
+        
+       if (type.equals("item")) {
+            //cast
+            item = (Item1) character;
+
+            //agregar a la lista
+            itemArray.add(item);
+
+            //
+            countItem++;
+         
+            tempFastSize = 0;
+            tempFurious = 0;
+            tempSmart = 0;
+            tempItem = 1;
+        }
+
 
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int cordenatesX = e.getX();
-        int cordenatesY = e.getY();
-        System.out.println(e.getX());
-        for (int i = 0; i < mazeStructure.length; i++) {
-            for (int j = 0; j < mazeStructure.length; j++) {
+       if (SwingUtilities.isLeftMouseButton(e)) {
+            int cordenatesX = e.getX();
+            int cordenatesY = e.getY();
+            System.out.println(e.getX());
+            for (int i = 0; i < mazeStructure.length; i++) {
+                for (int j = 0; j < mazeStructure.length; j++) {
+                    System.out.println(num);
+                    if (mazeStructure[i][j].contains(cordenatesX, cordenatesY)) {
 
-                if (mazeStructure[i][j].contains(cordenatesX, cordenatesY)) {
+                        if (num[i][j] == 1) {
 
-                    if (num[i][j] == 1) {
+                            num[i][j] = 0;
+                        } else if (num[i][j] == 0) {
+                            num[i][j] = 1;
+                        }
 
-                        num[i][j] = 0;
-                    } else if (num[i][j] == 0) {
-                        num[i][j] = 1;
+                    }
+                }
+            }
+
+            repaint();
+        }
+        if (SwingUtilities.isRightMouseButton(e)) {
+
+            int cordenatesX2 = e.getX();
+            int cordenatesY2 = e.getY();
+
+            for (int i = 0; i < mazeStructure.length; i++) {
+                for (int j = 0; j < mazeStructure.length; j++) {
+                    if (mazeStructure[i][j].contains(cordenatesX2, cordenatesY2)&& num[i][j] != 1&&num[i][j] != 3&&num[i][j] != 4) {
+                        try {
+                            
+                            //Item1 item = new Item1(0, (int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this);
+                            Item1 item = new Item1((int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this);
+                            // Item1 i = new Item1(PROPERTIES, j, j, WIDTH, num, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, j, this);
+                            addCharacter(item, "item");
+                            repaint();
+                            run();
+                            
+                        } catch (IOException ex) {
+                            Logger.getLogger(MazeLevels.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
 
                 }
             }
         }
-
-        repaint();
 
     }
 
@@ -281,6 +342,14 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
             //start thread
             smart.start();
         }
+        if(itemArray.size() != 0 && tempItem ==1){
+            System.out.println("ENTRE AL START DEL ITEM");
+            item = (Item1) itemArray.get(countItem-1);
+            
+            item.start();
+        }
     }
 
-}
+    }
+
+

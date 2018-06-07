@@ -2,30 +2,40 @@
 package domain;
 
 import java.awt.Image;
+import java.util.ArrayList;
 
-public class Item {
+public class Item extends Thread {
     
     private int positionX;
-    private int positionY;
-    private int speed;
-    private Image imageItem;
-    private Object [][] path;
+ private int positionY;        
+ private Image playerImage;
+ private int numImage;
+ private ArrayList<Image> sprite;
+ private int [][] path;
+ private String playerName;
+ private String type;
+ private int speed;  
 
-    public Item(int positionX, int positionY, int speed, Image imageItem, Object[][] path) {
+ // le quite el array del parametro ya que se le asigna dentro de cada clase del personaje
+    public Item(int positionX, int positionY, int numImg,int[][] path, String name, String type, int speed) {
         this.positionX = positionX;
         this.positionY = positionY;
-        this.speed = speed;
-        this.imageItem = imageItem;
+        this.numImage = numImg;
+        this.sprite = new ArrayList<Image>();
         this.path = path;
+        this.playerName = name;
+        this.type = type;
+        this.speed = speed;
     }
-
     public Item() {
         this.positionX = 0;
         this.positionY = 0;
+        this.playerImage = null;
+        this.sprite = null;
+        this.path = null;
+        this.playerName = "";
+        this.type = "";
         this.speed = 0;
-        this.imageItem = null;
-        this.path=null;
-        
     }
 
     public int getPositionX() {
@@ -44,6 +54,38 @@ public class Item {
         this.positionY = positionY;
     }
 
+    public Image getPlayerImage() {
+        return playerImage;
+    }
+
+    public void setPlayerImage(Image playerImage) {
+        this.playerImage = playerImage;
+    }
+
+    public ArrayList<Image> getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(ArrayList<Image> sprite) {
+        this.sprite = sprite;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public int getSpeed() {
         return speed;
     }
@@ -52,19 +94,11 @@ public class Item {
         this.speed = speed;
     }
 
-    public Image getImageItem() {
-        return imageItem;
-    }
-
-    public void setImageItem(Image imageItem) {
-        this.imageItem = imageItem;
-    }
-
-    public Object[][] getPath() {
+    public int[][] getPath() {
         return path;
     }
 
-    public void setPath(Object[][] path) {
+    public void setPath(int[][] path) {
         this.path = path;
     }
     

@@ -1,7 +1,7 @@
 
 package domain;
 
-import gameInterface.Winner;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -204,7 +204,7 @@ public class SmartCharacter extends Character{
         }
         
         this.numMatriz[9][9]=4;
-        Winner ll = new Winner(name);
+       
        
     }
     

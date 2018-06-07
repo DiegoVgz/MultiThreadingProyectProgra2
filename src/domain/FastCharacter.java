@@ -1,6 +1,6 @@
 package domain;
 
-import gameInterface.Winner;
+
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -240,7 +240,7 @@ public class FastCharacter extends Character {
                 }
             }
             this.numMatriz[limite][limite] = 4;
-            Winner ll = new Winner(name);
+            
         } catch (IOException ex) {
             Logger.getLogger(FastCharacter.class.getName()).log(Level.SEVERE, null, ex);
         } 

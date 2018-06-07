@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 public class Item1 extends Item {
 
     private int tired = 0;
-    private int percentage;
+    
     private int speed;
     private int posY;
     private int posX;
@@ -31,14 +31,14 @@ public class Item1 extends Item {
     LinkedList positionList;
     int[][] numMatriz;
 
-    public Item1(int percentage, int posX, int posY, int numImage,
+    public Item1(int posX, int posY, int numImage,
             int[][] matrizObject, String name, String type, int speed, JPanel jpanel) throws IOException {
         //constructor del hilo
         super(posX, posY, numImage, matrizObject, name, type, speed);
         setSprite();
         this.posX = posX;
         this.posY = posY;
-        this.percentage = percentage;
+        
         this.speed = speed;
         logic = new Logic();
         this.jpanel = jpanel;
@@ -48,14 +48,9 @@ public class Item1 extends Item {
         this.numMatriz = matrizObject;
     }
 
-    public int getPercentage() {
-        return percentage;
-    }
+   
 
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
-
-    }
+   
 
     public String getType() {
         return this.type;
@@ -66,29 +61,25 @@ public class Item1 extends Item {
 
     }
 
-    public int getTiredPercentage() {
-        int percentage = (100 * this.tired) / 10;
-        return percentage;
-
-    }
+   
 
     public void setSprite() throws FileNotFoundException, IOException {
         ArrayList<Image> sprite = super.getSprite();
-        for (int i = 1; i <= 11; i++) {
+       
 
-            BufferedImage buffer1 = ImageIO.read(new FileInputStream("src/Img/a/Santa" + i + ".png"));
+            BufferedImage buffer1 = ImageIO.read(new FileInputStream("src/Img/Item.png"));
             sprite.add(buffer1);
-        }
+        
         super.setSprite(setSprite2());
     }
 
     public ArrayList setSprite2() throws FileNotFoundException, IOException {
         ArrayList<Image> sprite = super.getSprite();
-        for (int i = 1; i < 11; i++) {
+        
 
-            BufferedImage buffer1 = ImageIO.read(new FileInputStream("src/Img/a/" + i + ".png"));
+            BufferedImage buffer1 = ImageIO.read(new FileInputStream("src/Img/Item.png"));
             sprite.add(buffer1);
-        }
+        
         return sprite;
     }
 
@@ -97,10 +88,10 @@ public class Item1 extends Item {
         try {
             ArrayList<Image> sprite = super.getSprite();
             super.setPlayerImage(sprite.get(1));
-            this.setPositionX(1);
-            this.setPositionY(1);
-            int coordenadaX = 0;
-            int coordenadaY = 0;
+            this.setPositionX(this.posX);
+            this.setPositionY(this.posY);
+            int coordenadaX = 5;
+            int coordenadaY = 5;
 
             int[][] maze = super.getPath();
             int limite = numMatriz.length - 1;
@@ -113,14 +104,14 @@ public class Item1 extends Item {
             boolean meta = true;
             
             //recorre el hilo hasta que llegue a la meta
-            while (coordenadaX != limite || coordenadaY != limite) {
+            while (true) {
 
                 try {
                     boolean back = false;
                     boolean front = false;
                     boolean down = false;
                     boolean up = false;
-                    Thread.sleep(speed + 100);
+                    Thread.sleep(100);
                     maze = super.getPath();
                     free = logic.freeSpace(maze, coordenadaX, coordenadaY);
 
@@ -129,24 +120,16 @@ public class Item1 extends Item {
                     }
                     // adelante
 
-                    if (this.tired > 9) {
-
-                        this.sleep(4000);
-                        this.tired = 0;
-
-                    }
+                   
 
                     if (free[0] == true && random == 1 && front == false) {
                         for (int j = 0; j < 65; j++) {
 
-                            super.setPlayerImage(sprite.get(indice));
+                            super.setPlayerImage(sprite.get(0));
                             this.setPositionX(getPositionX() + 1);
                             this.setPositionY(this.getPositionY());
 
-                            indice++;
-                            if (indice == 11) {
-                                indice = 0;
-                            }
+                           
  
                             jpanel.repaint();
                         }
@@ -158,21 +141,18 @@ public class Item1 extends Item {
                         tempI = free[1];
                         tempA = free[2];
                         tempB = free[3];
-                        tired++;
+                        
                         
                         //atras
                     } else if (free[1] == true && random == 2 && back == false) {
                         super.setSprite(setSprite2());
                         for (int j = 0; j < 65; j++) {
 
-                            super.setPlayerImage(sprite.get(indice));
+                            super.setPlayerImage(sprite.get(0));
                             this.setPositionX(this.getPositionX() - 1);
                             this.setPositionY(this.getPositionY());
 
-                            indice++;
-                            if (indice == 11) {
-                                indice = 0;
-                            }
+                           
                             jpanel.repaint();
                         }
                         front = true;
@@ -183,21 +163,18 @@ public class Item1 extends Item {
                         tempI = free[1];
                         tempA = free[2];
                         tempB = free[3];
-                        tired++;
+                        
                         
                         
                         // arriba
                     } else if (free[2] == true && random == 3 && down == false) {
                         for (int j = 0; j < 65; j++) {
 
-                            super.setPlayerImage(sprite.get(indice));
+                            super.setPlayerImage(sprite.get(0));
                             this.setPositionX(this.getPositionX());
                             this.setPositionY(this.getPositionY() - 1);
 
-                            indice++;
-                            if (indice == 11) {
-                                indice = 0;
-                            }
+                            
                             jpanel.repaint();
                         }
                         down = true;
@@ -208,40 +185,35 @@ public class Item1 extends Item {
                         tempI = free[1];
                         tempA = free[2];
                         tempB = free[3];
-                        tired++;
+                        
                         //abajo
                     } else if (free[3] == true && random == 4 && up == false) {
                         for (int j = 0; j < 65; j++) {
 
-                            super.setPlayerImage(sprite.get(indice));
+                            super.setPlayerImage(sprite.get(0));
                             this.setPositionX(this.getPositionX());
                             this.setPositionY(this.getPositionY() + 1);
 
-                            indice++;
-                            if (indice == 11) {
-                                indice = 0;
-                            }
+                            
                             jpanel.repaint();
                             up = true;
                         }
                         coordenadaX++;
                         this.numMatriz[coordenadaX - 1][coordenadaY] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 5;
+                        this.numMatriz[coordenadaX][coordenadaY] = 6;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
                         tempB = free[3];
-                        tired++;
+                        
                     }
                     
                 } catch (InterruptedException ex) {
                     Logger.getLogger(FastCharacter.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                if (this.getPositionX() == limite && this.getPositionY() == limite) {
-                    meta = false;
-                }
+               
             }
-            this.numMatriz[limite][limite] = 4;
+           // this.numMatriz[limite][limite] = 4;
            
         } catch (IOException ex) {
             Logger.getLogger(FastCharacter.class.getName()).log(Level.SEVERE, null, ex);

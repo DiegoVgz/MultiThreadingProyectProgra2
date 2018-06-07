@@ -113,14 +113,15 @@ public class Item1 extends Item {
                     boolean up = false;
                     Thread.sleep(100);
                     maze = super.getPath();
-                    free = logic.freeSpace(maze, coordenadaX, coordenadaY);
+                    free = logic.freeSpace(maze,coordenadaX, coordenadaY);
 
                     if (free[0] != tempD || free[1] != tempI || free[2] != tempA || free[3] != tempB) {
                         random = logic.random();
                     }
                     // adelante
 
-                   
+                  // if(free[0])
+                    
 
                     if (free[0] == true && random == 1 && front == false) {
                         for (int j = 0; j < 65; j++) {

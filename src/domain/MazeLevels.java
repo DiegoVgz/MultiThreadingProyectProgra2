@@ -252,10 +252,10 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
        if (SwingUtilities.isLeftMouseButton(e)) {
             int cordenatesX = e.getX();
             int cordenatesY = e.getY();
-            System.out.println(e.getX());
+            ;
             for (int i = 0; i < mazeStructure.length; i++) {
                 for (int j = 0; j < mazeStructure.length; j++) {
-                    System.out.println(num);
+                    
                     if (mazeStructure[i][j].contains(cordenatesX, cordenatesY)) {
 
                         if (num[i][j] == 1) {
@@ -345,8 +345,12 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
         if(itemArray.size() != 0 && tempItem ==1){
             System.out.println("ENTRE AL START DEL ITEM");
             item = (Item1) itemArray.get(countItem-1);
-            
-            item.start();
+            try{
+                item.start(); 
+            }catch(IllegalThreadStateException i){
+                System.out.println("ME CAI me cai ME CAI");
+            }
+           
         }
     }
 

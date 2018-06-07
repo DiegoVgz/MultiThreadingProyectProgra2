@@ -5,6 +5,7 @@
  */
 package domain;
 
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Melissa Ramírez R
  */
-public class Cronometro extends Thread{
+public class Cronometro extends Thread implements Serializable{
    private  String time;
    private boolean finish;
     public Cronometro() {

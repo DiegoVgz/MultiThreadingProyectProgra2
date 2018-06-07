@@ -166,7 +166,7 @@ public class Item1 extends Item {
                       //  back = true;
                         coordenadaY++;
                         this.numMatriz[coordenadaX][coordenadaY - 1] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 5;
+                        this.numMatriz[coordenadaX][coordenadaY] = 9;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
@@ -188,7 +188,7 @@ public class Item1 extends Item {
                        // front = true;
                         coordenadaY--;
                         this.numMatriz[coordenadaX][coordenadaY + 1] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 6;
+                        this.numMatriz[coordenadaX][coordenadaY] = 9;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
@@ -210,7 +210,7 @@ public class Item1 extends Item {
                        // down = true;
                         coordenadaX--;
                         this.numMatriz[coordenadaX + 1][coordenadaY] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 6;
+                        this.numMatriz[coordenadaX][coordenadaY] = 9;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
@@ -230,7 +230,7 @@ public class Item1 extends Item {
                         }
                         coordenadaX++;
                         this.numMatriz[coordenadaX - 1][coordenadaY] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 6;
+                        this.numMatriz[coordenadaX][coordenadaY] = 9;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];

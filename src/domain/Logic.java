@@ -42,7 +42,7 @@ public class Logic {
                 
         //posicion hacia adelante
         if (posY<=limiteX-2) {
-            if ( matriz[posX][posY+1] == 0|| matriz[posX][posY+1] == 4) {
+            if ( matriz[posX][posY+1] == 0|| matriz[posX][posY+1] == 4 || (int) matriz[posX][posY+1] ==6) {
                 arrayFree[0] = true;
                  derecha=1;
             }
@@ -53,7 +53,7 @@ public class Logic {
         
         //posicion hacia atrás
         if (existeMedio(posX, posY-1, limiteX)) {
-            if ((int) matriz[posX][posY-1] == 0 || (int) matriz[posX][posY-1] == 4) {
+            if ((int) matriz[posX][posY-1] == 0 || (int) matriz[posX][posY-1] == 4 || (int) matriz[posX][posY-1] ==6) {
                 arrayFree[1] = true;
                 izquierda=2;
             }
@@ -63,7 +63,7 @@ public class Logic {
          
         //posicion hacia arriba
         if (existeMedio(posX-1 , posY, limiteX)) {
-            if ((int) matriz[posX -1][posY] == 0 || (int) matriz[posX -1][posY] == 4) {
+            if ((int) matriz[posX -1][posY] == 0 || (int) matriz[posX -1][posY] == 4 || (int) matriz[posX-1][posY] ==6) {
                 arrayFree[2] = true;
                 arriba=3;
             }
@@ -72,7 +72,7 @@ public class Logic {
 
         //posicion hacia abajo
         if (posX<=limiteX-2) {
-            if ((int) matriz[posX+1 ][posY] == 0|| (int) matriz[posX+1 ][posY] == 4) {
+            if ((int) matriz[posX+1 ][posY] == 0|| (int) matriz[posX+1 ][posY] == 4 || (int) matriz[posX+1][posY] ==6) {
                 arrayFree[3] = true;
                 abajo=4;
             }

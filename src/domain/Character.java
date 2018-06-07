@@ -2,9 +2,10 @@
 package domain;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Character extends Thread {
+public class Character extends Thread implements Serializable{
 
  private int positionX;
  private int positionY;        

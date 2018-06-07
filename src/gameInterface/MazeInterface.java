@@ -9,11 +9,15 @@ import domain.FastCharacter;
 import domain.FuriousCharacter;
 import domain.MazeLevels;
 import domain.Maze;
+import domain.PositionCharacter;
+import domain.SerializableFile;
 import domain.SmartCharacter;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -23,60 +27,62 @@ import javax.swing.JDesktopPane;
  *
  * @author 1
  */
-public class MazeInterface extends javax.swing.JFrame  {
-private Dimension dim;
-        Maze m1;
-        MazeLevels m ;
+public class MazeInterface extends javax.swing.JFrame implements Serializable {
+
+    private Dimension dim;
+    Maze m1;
+    MazeLevels m;
+    String maze[][];
     /**
      * Creates new form MazeInterface
      */
-    public MazeInterface() throws IOException {
+    ArrayList<PositionCharacter> array = new ArrayList<>();
 
+    ;
+    public MazeInterface() throws IOException, ClassNotFoundException {
         initComponents();
         
-        dim=super.getToolkit().getScreenSize();
-        super.setSize(dim);
-        BufferedImage img  = ImageIO.read(new File("wall.jpg"));
-        String gameLevel =jTextField1.getText();
+        mostrar();
+       // dim = super.getToolkit().getScreenSize();
+       // super.setSize(800);
+        BufferedImage img = ImageIO.read(new File("wall.jpg"));
+        String gameLevel = jTextField1.getText();
         BufferedImage doors = ImageIO.read(new File("door.png"));
         BufferedImage exit = ImageIO.read(new File("door.gif"));
-       
-        int mazeSize=0;
-        int mazeLevel=0;
-        int mazeWidth=0;
-        int mazeHight=0;
-        
-        if(gameLevel.equalsIgnoreCase("hard")){
-            mazeSize=11;
-            mazeLevel=12;
-            mazeWidth=733;
-            mazeHight=903;
-            
-          img  = ImageIO.read(new File("lava.gif"));
-         
-        }else if(gameLevel.equalsIgnoreCase("normal")){
-            mazeSize=15;
-            mazeLevel=11;
-            mazeWidth=750;
-            mazeHight=850;
-             img  = ImageIO.read(new File("ice.jpg"));
-        }else{
-            mazeSize=15;
-            mazeLevel=10;
-            mazeWidth=650;
-            mazeHight=750;
+
+        int mazeSize = 0;
+        int mazeLevel = 0;
+        int mazeWidth = 0;
+        int mazeHight = 0;
+
+        if (gameLevel.equalsIgnoreCase("hard")) {
+            mazeSize = 11;
+            mazeLevel = 12;
+            mazeWidth = 733;
+            mazeHight = 903;
+
+            img = ImageIO.read(new File("lava.gif"));
+
+        } else if (gameLevel.equalsIgnoreCase("normal")) {
+            mazeSize = 15;
+            mazeLevel = 11;
+            mazeWidth = 750;
+            mazeHight = 850;
+            img = ImageIO.read(new File("ice.jpg"));
+        } else {
+            mazeSize = 15;
+            mazeLevel = 10;
+            mazeWidth = 650;
+            mazeHight = 750;
         }
-        
-        
-        
-         m1 = new Maze(0, 0, img, gameLevel,doors,exit);
-         m = new MazeLevels(m1, 0,0,0);
+
+        m1 = new Maze(0, 0, img, gameLevel, doors, exit);
+        m = new MazeLevels(m1, 0, 0, 0);
         jPanel1.setSize(m.getWidth(), m.getWidth());
         jPanel1.add(m);
-        
+
         m.repaint();
-        
-        
+
     }
 
     /**
@@ -95,9 +101,18 @@ private Dimension dim;
         createFurious = new javax.swing.JButton();
         createSmart = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -110,35 +125,42 @@ private Dimension dim;
             .addGap(0, 523, Short.MAX_VALUE)
         );
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 25, -1, -1));
+
         jButton1.setText("Acccept");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(947, 587, 175, 57));
 
         jTextField1.setText("easy");
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1157, 601, 179, 30));
 
-        CreateFast.setText("Fast");
+        CreateFast.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/zombie/zombie1.png"))); // NOI18N
         CreateFast.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CreateFastActionPerformed(evt);
             }
         });
+        getContentPane().add(CreateFast, new org.netbeans.lib.awtextra.AbsoluteConstraints(751, 75, -1, -1));
 
-        createFurious.setText("Furious");
+        createFurious.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/d/predador1.png"))); // NOI18N
         createFurious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createFuriousActionPerformed(evt);
             }
         });
+        getContentPane().add(createFurious, new org.netbeans.lib.awtextra.AbsoluteConstraints(767, 272, -1, -1));
 
-        createSmart.setText("Smart");
+        createSmart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/p/Policia1.png"))); // NOI18N
         createSmart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createSmartActionPerformed(evt);
             }
         });
+        getContentPane().add(createSmart, new org.netbeans.lib.awtextra.AbsoluteConstraints(767, 461, -1, -1));
 
         jButton2.setText("exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -146,51 +168,42 @@ private Dimension dim;
                 jButton2ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(947, 680, 175, 57));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(CreateFast)
-                    .addComponent(createFurious)
-                    .addComponent(createSmart))
-                .addContainerGap(189, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1))
-                        .addGap(80, 80, 80))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(34, 34, 34))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(CreateFast)
-                        .addGap(54, 54, 54)
-                        .addComponent(createFurious)
-                        .addGap(53, 53, 53)
-                        .addComponent(createSmart)))
-                .addGap(74, 74, 74)
-                .addComponent(jButton1)
-                .addGap(28, 28, 28)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18))
-        );
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Name", "Time"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(947, 25, 499, 506));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        jLabel1.setText("FAST");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(751, 25, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        jLabel2.setText("FURIOS");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(751, 222, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        jLabel3.setText("SMART");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(767, 411, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        jLabel4.setText("PRESS RIGHT CLICKED TO GET ITEM");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 668, 609, 47));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1157, 680, 179, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/backGround.png"))); // NOI18N
+        jLabel5.setText("jLabel5");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1490, 780));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -198,108 +211,139 @@ private Dimension dim;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         jPanel1.removeAll();
-       
+
         try {
-        BufferedImage img  = ImageIO.read(new File("wall.jpg"));
-        String gameLevel =jTextField1.getText();
-        BufferedImage doors = ImageIO.read(new File("door.png"));
-        BufferedImage exit = ImageIO.read(new File("door.gif"));
-       
-        int mazeSize=0;
-        int mazeLevel=0;
-        int mazeWidth=0;
-        int mazeHight=0;
-        
-        if(gameLevel.equalsIgnoreCase("hard")){
-            mazeSize=14;
-            mazeLevel=12;
-            mazeWidth=770;
-            mazeHight=900;
-            
-          img  = ImageIO.read(new File("lava.gif"));
-         
-        }else if(gameLevel.equalsIgnoreCase("normal")){
-            mazeSize=15;
-            mazeLevel=11;
-            mazeWidth=750;
-            mazeHight=850;
-             img  = ImageIO.read(new File("ice.jpg"));
-        }else{
-            mazeSize=15;
-            mazeLevel=10;
-            mazeWidth=650;
-            mazeHight=750;
-        }
-        
-        
-        
-        m1 = new Maze(mazeLevel, mazeLevel, img, gameLevel,doors,exit);
-        m = new MazeLevels(m1, mazeSize,mazeWidth,mazeHight);
-        jPanel1.setSize(m.getWidth(), m.getWidth());
-        jPanel1.add(m);
-        m.run();
-        m.repaint();
-         
-         
+            BufferedImage img = ImageIO.read(new File("wall.jpg"));
+            String gameLevel = jTextField1.getText();
+            BufferedImage doors = ImageIO.read(new File("door.png"));
+            BufferedImage exit = ImageIO.read(new File("door.gif"));
+
+            int mazeSize = 0;
+            int mazeLevel = 0;
+            int mazeWidth = 0;
+            int mazeHight = 0;
+
+            if (gameLevel.equalsIgnoreCase("hard")) {
+                mazeSize = 14;
+                mazeLevel = 12;
+                mazeWidth = 770;
+                mazeHight = 900;
+
+                img = ImageIO.read(new File("lava.gif"));
+
+            } else if (gameLevel.equalsIgnoreCase("normal")) {
+                mazeSize = 15;
+                mazeLevel = 11;
+                mazeWidth = 750;
+                mazeHight = 850;
+                img = ImageIO.read(new File("ice.jpg"));
+            } else {
+                mazeSize = 15;
+                mazeLevel = 10;
+                mazeWidth = 650;
+                mazeHight = 750;
+            }
+            new SerializableFile().escribir(new ArrayList<>(), "Time.obj");
+            m1 = new Maze(mazeLevel, mazeLevel, img, gameLevel, doors, exit);
+            m = new MazeLevels(m1, mazeSize, mazeWidth, mazeHight);
+            jPanel1.setSize(m.getWidth(), m.getWidth());
+            jPanel1.add(m);
+            m.run();
+            m.repaint();
+            mostrar();
+
         } catch (IOException ex) {
             Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void CreateFastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateFastActionPerformed
-           try {
-            
+        try {
 
-        FastCharacter f = new FastCharacter(0, 25, 25, 0,
-        m.getNum(), "Kevin", "fast", 30, jPanel1);
-        m.addCharacter(f, "fast");
-        m.run();
-        m.repaint();
-        
-           } catch (IOException ex) {
-               Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        
-        
+            FastCharacter f = new FastCharacter(0, 25, 25, 0,
+                    m.getNum(), "Kevin", "fast", 30, jPanel1, this);
+            m.addCharacter(f, "fast");
+            m.run();
+            m.repaint();
+
+        } catch (IOException ex) {
+            Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_CreateFastActionPerformed
 
     private void createFuriousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFuriousActionPerformed
-        
-        try {
-              
-        FuriousCharacter fu = new FuriousCharacter(0, 25, 25, 0, m.getNum(), "Kevin", "furious", 120, jPanel1);
 
-        m.addCharacter(fu, "furious");
-        m.run();
-        m.repaint();
-        
-           } catch (IOException ex) {
-               Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        
+        try {
+
+            FuriousCharacter fu = new FuriousCharacter(0, 25, 25, 0, m.getNum(), "Kevin", "furious", 120, jPanel1, this);
+
+            m.addCharacter(fu, "furious");
+            m.run();
+            m.repaint();
+
+        } catch (IOException ex) {
+            Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_createFuriousActionPerformed
 
     private void createSmartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createSmartActionPerformed
         try {
-       
-            SmartCharacter s = new SmartCharacter(0, 25, 25, 0, m.getNum(), "Kevin", "fast", 120, jPanel1);
-     
-        m.addCharacter(s, "smart");
-        m.run();
-        m.repaint();
-        
-           } catch (IOException ex) {
-               Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
-           }
+
+            SmartCharacter s = new SmartCharacter(0, 25, 25, 0, m.getNum(), "Kevin", "fast", 120, jPanel1, this);
+
+            m.addCharacter(s, "smart");
+            m.run();
+            m.repaint();
+
+        } catch (IOException ex) {
+            Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_createSmartActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        new SerializableFile().escribir(new ArrayList<>(), "Time.obj");
+        try {
+            mostrar();
+            this.dispose();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void mostrar() throws ClassNotFoundException {
+        array = new SerializableFile().cargar(new ArrayList<>(), "Time.obj");
+        if (array != null) {
+            String maze[][] = new String[array.size()][2];
+
+            for (int i = 0; i < array.size(); i++) {
+                maze[i][0] = array.get(i).getName();
+                maze[i][1] = array.get(i).getTime();
+            }
+
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                    maze,
+                    new String[]{
+                        "Name", "Time"
+                    }
+            ));
+        }
+    }
+
+    public ArrayList<PositionCharacter> getArray() {
+        return array;
+    }
+
+    public void setArray(ArrayList<PositionCharacter> array) {
+        this.array = array;
+    }
 
     /**
      * @param args the command line arguments
@@ -310,7 +354,7 @@ private Dimension dim;
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -328,7 +372,7 @@ private Dimension dim;
             java.util.logging.Logger.getLogger(MazeInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-       
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -336,6 +380,8 @@ private Dimension dim;
                     new MazeInterface().setVisible(true);
 
                 } catch (IOException ex) {
+                    Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
                     Logger.getLogger(MazeInterface.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -348,7 +394,15 @@ private Dimension dim;
     private javax.swing.JButton createSmart;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     public javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

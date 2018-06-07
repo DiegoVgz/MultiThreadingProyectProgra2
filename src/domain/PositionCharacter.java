@@ -5,11 +5,13 @@
  */
 package domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Melissa Ramírez R
  */
-public class PositionCharacter {
+public class PositionCharacter implements Serializable {
     private String name;
     private String time;
 
@@ -33,6 +35,12 @@ public class PositionCharacter {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "PositionCharacter{" + "name=" + name + ", time=" + time + '}';
+    }
+    
     
     
 }

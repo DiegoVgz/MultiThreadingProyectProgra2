@@ -282,7 +282,7 @@ public class MazeLevels extends JPanel implements MouseListener, Runnable {
                         try {
                             
                             //Item1 item = new Item1(0, (int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this);
-                            Item1 item = new Item1((int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this);
+                            Item1 item = new Item1((int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this,mazeStructure);
                             // Item1 i = new Item1(PROPERTIES, j, j, WIDTH, num, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, j, this);
                             addCharacter(item, "item");
                             repaint();

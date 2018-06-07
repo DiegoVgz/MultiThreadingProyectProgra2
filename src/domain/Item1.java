@@ -3,6 +3,7 @@ package domain;
 
 
 import java.awt.Image;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,9 +31,10 @@ public class Item1 extends Item {
     String name = "";
     LinkedList positionList;
     int[][] numMatriz;
+    Rectangle2D[][] rec2;
 
     public Item1(int posX, int posY, int numImage,
-            int[][] matrizObject, String name, String type, int speed, JPanel jpanel) throws IOException {
+            int[][] matrizObject, String name, String type, int speed, JPanel jpanel,Rectangle2D[][] rec2) throws IOException {
         //constructor del hilo
         super(posX, posY, numImage, matrizObject, name, type, speed);
         setSprite();
@@ -46,6 +48,7 @@ public class Item1 extends Item {
         this.positionList = positionList;
         this.type = type;
         this.numMatriz = matrizObject;
+        this.rec2 = rec2;
     }
 
    
@@ -86,12 +89,40 @@ public class Item1 extends Item {
     @Override
     public void run() {
         try {
+            
             ArrayList<Image> sprite = super.getSprite();
             super.setPlayerImage(sprite.get(1));
             this.setPositionX(this.posX);
             this.setPositionY(this.posY);
-            int coordenadaX = 5;
-            int coordenadaY = 5;
+            
+            int coordenadaX =1;
+            int coordenadaY = 1;
+            for (int i = 0; i < rec2.length; i++) {
+                for (int j = 0; j < rec2.length; j++) {
+                    
+                   if (rec2[i][j].contains(this.getPositionX(), this.getPositionY())&& numMatriz[i][j] != 1&&numMatriz[i][j] != 3&&numMatriz[i][j] != 4) { 
+                      coordenadaX = i;
+            coordenadaY = j; 
+                }
+            }
+            }
+//            for (int i = 0; i < mazeStructure.length; i++) {
+//                for (int j = 0; j < mazeStructure.length; j++) {
+//                    if (mazeStructure[i][j].contains(cordenatesX2, cordenatesY2)&& num[i][j] != 1&&num[i][j] != 3&&num[i][j] != 4) {
+//                        try {
+//                            
+//                            //Item1 item = new Item1(0, (int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this);
+//                            Item1 item = new Item1((int)mazeStructure[i][j].getX(), (int)mazeStructure[i][j].getY(), 0, getNum(), "Kevin", "fast", 120, this,mazeStructure);
+//                            // Item1 i = new Item1(PROPERTIES, j, j, WIDTH, num, TOOL_TIP_TEXT_KEY, TOOL_TIP_TEXT_KEY, j, this);
+//                            addCharacter(item, "item");
+//                            repaint();
+//                            run();
+//                            
+//                        } catch (IOException ex) {
+//                            Logger.getLogger(MazeLevels.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+            
+            
 
             int[][] maze = super.getPath();
             int limite = numMatriz.length - 1;
@@ -103,7 +134,7 @@ public class Item1 extends Item {
             boolean tempB = free[3];
             boolean meta = true;
             
-            //recorre el hilo hasta que llegue a la meta
+            //recorre el hilo  siempre
             while (true) {
 
                 try {
@@ -111,7 +142,7 @@ public class Item1 extends Item {
                     boolean front = false;
                     boolean down = false;
                     boolean up = false;
-                    Thread.sleep(100);
+                    Thread.sleep(200);
                     maze = super.getPath();
                     free = logic.freeSpace(maze,coordenadaX, coordenadaY);
 
@@ -130,11 +161,9 @@ public class Item1 extends Item {
                             this.setPositionX(getPositionX() + 1);
                             this.setPositionY(this.getPositionY());
 
-                           
- 
                             jpanel.repaint();
                         }
-                        back = true;
+                      //  back = true;
                         coordenadaY++;
                         this.numMatriz[coordenadaX][coordenadaY - 1] = 0;
                         this.numMatriz[coordenadaX][coordenadaY] = 5;
@@ -156,10 +185,10 @@ public class Item1 extends Item {
                            
                             jpanel.repaint();
                         }
-                        front = true;
+                       // front = true;
                         coordenadaY--;
                         this.numMatriz[coordenadaX][coordenadaY + 1] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 5;
+                        this.numMatriz[coordenadaX][coordenadaY] = 6;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
@@ -178,10 +207,10 @@ public class Item1 extends Item {
                             
                             jpanel.repaint();
                         }
-                        down = true;
+                       // down = true;
                         coordenadaX--;
                         this.numMatriz[coordenadaX + 1][coordenadaY] = 0;
-                        this.numMatriz[coordenadaX][coordenadaY] = 5;
+                        this.numMatriz[coordenadaX][coordenadaY] = 6;
                         tempD = free[0];
                         tempI = free[1];
                         tempA = free[2];
@@ -197,7 +226,7 @@ public class Item1 extends Item {
 
                             
                             jpanel.repaint();
-                            up = true;
+                           // up = true;
                         }
                         coordenadaX++;
                         this.numMatriz[coordenadaX - 1][coordenadaY] = 0;

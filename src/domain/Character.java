@@ -4,22 +4,24 @@ package domain;
 import java.awt.Image;
 import java.util.ArrayList;
 
-public class Character extends Thread{
+public class Character extends Thread {
 
  private int positionX;
  private int positionY;        
  private Image playerImage;
+ private int numImage;
  private ArrayList<Image> sprite;
- private Object [][] path;
+ private int [][] path;
  private String playerName;
  private String type;
  private int speed;  
 
-    public Character(int positionX, int positionY, Image playerImage, ArrayList<Image> sprite, Object[][] path, String name, String type, int speed) {
+ // le quite el array del parametro ya que se le asigna dentro de cada clase del personaje
+    public Character(int positionX, int positionY, int numImg,int[][] path, String name, String type, int speed) {
         this.positionX = positionX;
         this.positionY = positionY;
-        this.playerImage = playerImage;
-        this.sprite = sprite;
+        this.numImage = numImg;
+        this.sprite = new ArrayList<Image>();
         this.path = path;
         this.playerName = name;
         this.type = type;
@@ -68,14 +70,6 @@ public class Character extends Thread{
         this.sprite = sprite;
     }
 
-    public Object[][] getPath() {
-        return path;
-    }
-
-    public void setPath(Object[][] path) {
-        this.path = path;
-    }
-
     public String getPlayerName() {
         return playerName;
     }
@@ -99,6 +93,15 @@ public class Character extends Thread{
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public int[][] getPath() {
+        return path;
+    }
+
+    public void setPath(int[][] path) {
+        this.path = path;
+    }
+    
     
     
 }
